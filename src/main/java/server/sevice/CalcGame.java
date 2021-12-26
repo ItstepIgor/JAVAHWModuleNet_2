@@ -14,21 +14,24 @@ import java.util.List;
 public class CalcGame {
     private List<Game> gameList = new ArrayList<>();
 
-    public void calcRound(int player1, int player2) {
+    public int calcRound(int player1, int player2) {
+        int victoryFirstPlayer = 0;
         if (player1 == 1 && player2 == 2) {
             gameList.add(new Game(player1, player2, 1, 0));
+            victoryFirstPlayer = 1;
         } else if (player1 == 1 && player2 == 3) {
             gameList.add(new Game(player1, player2, 0, 1));
         } else if (player1 == 2 && player2 == 3) {
             gameList.add(new Game(player1, player2, 1, 0));
+            victoryFirstPlayer = 1;
         } else if (player1 == 3 && player2 == 2) {
             gameList.add(new Game(player1, player2, 0, 1));
         } else if (player1 == 3 && player2 == 1) {
             gameList.add(new Game(player1, player2, 1, 0));
+            victoryFirstPlayer = 1;
         } else if (player1 == 2 && player2 == 1) {
             gameList.add(new Game(player1, player2, 0, 1));
-        } else {
-            gameList.add(new Game(player1, player2, 0, 0));
         }
+        return victoryFirstPlayer;
     }
 }

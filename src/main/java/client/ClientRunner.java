@@ -31,8 +31,11 @@ public class ClientRunner {
                 int selectPlayer1 = inputStream.readInt();
                 if (selectPlayer1 == selectPlayer2) {
                     i--;
+                } else {
+                    System.out.println(inputStream.readUTF());
                 }
             }
+            System.out.println(inputStream.readUTF());
         }
     }
 }
