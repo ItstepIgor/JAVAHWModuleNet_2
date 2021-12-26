@@ -24,6 +24,7 @@ public class GameService {
         outputStream.writeInt(selectPlayer1);
         int selectPlayer2 = inputStream.readInt();
         if (selectPlayer1 == selectPlayer2) {
+            System.out.println("Ничья");
             i--;
         } else {
             int victoryFirstPlayer = calcRound(selectPlayer1, selectPlayer2);

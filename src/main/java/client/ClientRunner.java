@@ -65,6 +65,7 @@ public class ClientRunner {
         outputStream.writeInt(selectPlayer2);
         selectPlayer1 = inputStream.readInt();
         if (selectPlayer1 == selectPlayer2) {
+            System.out.println("Ничья");
             i--;
         } else {
             //Результат раунда
