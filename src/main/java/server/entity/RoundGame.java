@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Game {
+public class RoundGame {
     int selectionPlayer1;
     int selectionPlayer2;
     int pointsPlayer1;
