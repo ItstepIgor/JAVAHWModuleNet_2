@@ -61,6 +61,9 @@ public class ClientRunner {
                                         System.out.println("Игроки заключили ничью");
                                         cycleStop = true;
                                         socket.close();
+                                    } else {
+                                        outputStream.writeBoolean(false);
+                                        i--;
                                     }
                                 } else {
                                     System.out.println("""
@@ -86,6 +89,9 @@ public class ClientRunner {
                                     cycleStop = true;
                                     System.out.println("Игроки заключили ничью");
                                     socket.close();
+                                } else {
+                                    System.out.println("Игра продолжается");
+                                    i--;
                                 }
                             }
                             case 3 -> {
