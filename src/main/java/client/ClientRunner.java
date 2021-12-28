@@ -42,37 +42,52 @@ public class ClientRunner {
                         switch (selectAction) {
                             case 1 -> {
                                 outputStream.writeUTF("game");
-                                System.out.println("""
-                                        Выберите:
-                                        1 - Камень
-                                        2 - Ножницы
-                                        3 - Бумага
-                                        """);
-                                selectPlayer2 = scanner.nextInt();
-                                if (selectPlayer2 > 0 && selectPlayer2 < 4) {
-                                    String capitulate = inputStream.readUTF();
-                                    if (capitulate.equals("capitulate")) {
-                                        System.out.println("Противник сдался");
+
+                                String offer = inputStream.readUTF();
+                                if (offer.equals("capitulate")) {
+                                    System.out.println("Противник сдался");
+                                    cycleStop = true;
+                                    outputStream.writeUTF("capitulate");
+                                    socket.close();
+                                } else if (offer.equals("offerDraw")) {
+                                    System.out.println("""
+                                            Противник предлагает ничью:
+                                            1 - согласиться
+                                            2 - продолжить игру
+                                            """);
+                                    int a = scanner.nextInt();
+                                    if (a == 1) {
+                                        outputStream.writeBoolean(true);
+                                        System.out.println("Игроки заключили ничью");
                                         cycleStop = true;
-                                        outputStream.writeUTF("capitulate");
                                         socket.close();
-                                    } else {
-                                        i = inputOutputClient(inputStream, outputStream, selectPlayer2, i);
                                     }
                                 } else {
-                                    System.out.println("Сделайте правильный выбор");
-                                    i--;
+                                    System.out.println("""
+                                            Выберите:
+                                            1 - Камень
+                                            2 - Ножницы
+                                            3 - Бумага
+                                            """);
+                                    selectPlayer2 = scanner.nextInt();
+                                    if (selectPlayer2 > 0 && selectPlayer2 < 4) {
+                                        i = inputOutputClient(inputStream, outputStream, selectPlayer2, i);
+                                    } else {
+                                        System.out.println("Сделайте правильный выбор");
+                                        i--;
+                                    }
                                 }
-
                             }
-//                            case 2 -> {
-//                                outputStream.writeUTF("Предлагаю ничью");
-//                                String same = inputStream.readUTF();
-//                                if (same.equals("Yes")) {
-//                                    System.out.println("Игроки заключили ничью");
-//                                    socket.close();
-//                                }
-//                            }
+                            case 2 -> {
+                                inputStream.readUTF();
+                                outputStream.writeUTF("offerDraw");
+                                boolean a = inputStream.readBoolean();
+                                if (a) {
+                                    cycleStop = true;
+                                    System.out.println("Игроки заключили ничью");
+                                    socket.close();
+                                }
+                            }
                             case 3 -> {
                                 outputStream.writeUTF("capitulate");
                                 System.out.println("Вы сдались");
