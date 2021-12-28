@@ -32,23 +32,63 @@ public class ClientRunner {
 
                 case 1, 2 -> {
                     for (int i = 0; i < 5; i++) {
+                        boolean cycleStop = false;
                         System.out.println("""
-                                Выберите:
-                                1 - Камень
-                                2 - Ножницы
-                                3 - Бумага
+                                1 - Совершить ход
+                                2 - Предложить ничью
+                                3 - Признать поражение
                                 """);
-                        selectPlayer2 = scanner.nextInt();
-                        if (selectPlayer2 > 0 && selectPlayer2 < 4) {
-                            i = inputOutputClient(inputStream, outputStream, selectPlayer2, i);
-                        } else {
-                            System.out.println("Сделайте правильный выбор");
-                            i--;
+                        int selectAction = scanner.nextInt();
+                        switch (selectAction) {
+                            case 1 -> {
+                                outputStream.writeBoolean(false);
+                                System.out.println("""
+                                        Выберите:
+                                        1 - Камень
+                                        2 - Ножницы
+                                        3 - Бумага
+                                        """);
+                                selectPlayer2 = scanner.nextInt();
+                                if (selectPlayer2 > 0 && selectPlayer2 < 4) {
+                                    boolean capitulate = inputStream.readBoolean();
+                                    if (capitulate) {
+                                        System.out.println("Противник сдался");
+                                        cycleStop = true;
+                                        outputStream.writeBoolean(true);
+                                        socket.close();
+                                    } else {
+                                        i = inputOutputClient(inputStream, outputStream, selectPlayer2, i);
+                                    }
+                                } else {
+                                    System.out.println("Сделайте правильный выбор");
+                                    i--;
+                                }
+
+                            }
+//                            case 2 -> {
+//                                outputStream.writeUTF("Предлагаю ничью");
+//                                String same = inputStream.readUTF();
+//                                if (same.equals("Yes")) {
+//                                    System.out.println("Игроки заключили ничью");
+//                                    socket.close();
+//                                }
+//                            }
+                            case 3 -> {
+                                outputStream.writeBoolean(true);
+                                System.out.println("Вы сдались");
+                                cycleStop = true;
+                            }
+
+                        }
+                        if (cycleStop) {
+                            break;
                         }
                     }
                 }
                 case 3 -> {
                     for (int i = 0; i < 5; i++) {
+                        outputStream.writeBoolean(false);
+                        inputStream.readBoolean();
                         selectPlayer2 = new Random().nextInt(3) + 1;
                         i = inputOutputClient(inputStream, outputStream, selectPlayer2, i);
                     }
@@ -56,6 +96,8 @@ public class ClientRunner {
             }
             //Результат игры
             System.out.println(inputStream.readUTF());
+        } catch (Exception exception) {
+            System.out.println("Игра закончена");
         }
     }
 
