@@ -83,6 +83,7 @@ public class ServerRunner {
                                 }
                             }
                             case 2 -> {
+                                //Обработка с ничьей на сервере
                                 inputStream.readUTF();
                                 outputStream.writeUTF("offerDraw");
                                 boolean a = inputStream.readBoolean();
@@ -97,7 +98,6 @@ public class ServerRunner {
                             }
                             case 3 -> {
                                 outputStream.writeUTF("capitulate");
-//                                cycleStop = true;
                                 System.out.println("Вы сдались");
                                 inputStream.readUTF();
                                 cycleStop = true;
@@ -112,7 +112,6 @@ public class ServerRunner {
                     for (int i = 0; i < 5; i++) {
                         outputStream.writeUTF("game");
                         offer = inputStream.readUTF();
-//                        System.out.println(capitulate);
                         int selectPlayer1 = new Random().nextInt(3) + 1;
                         if (offer.equals("capitulate")) {
                             System.out.println("Противник сдался");
@@ -120,6 +119,7 @@ public class ServerRunner {
                             socket.close();
                             serverSocket.close();
                         } else if (offer.equals("offerDraw")) {
+                            //Сервер принимает ничью сразу. Можно написать логику на отказ
                             outputStream.writeBoolean(true);
                             System.out.println("Игроки заключили ничью");
                             cycleStop = true;

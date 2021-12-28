@@ -82,6 +82,7 @@ public class ClientRunner {
                                 }
                             }
                             case 2 -> {
+                                //Обработка с ничьей на клиенте
                                 inputStream.readUTF();
                                 outputStream.writeUTF("offerDraw");
                                 boolean a = inputStream.readBoolean();
