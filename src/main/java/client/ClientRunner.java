@@ -41,7 +41,7 @@ public class ClientRunner {
                         int selectAction = scanner.nextInt();
                         switch (selectAction) {
                             case 1 -> {
-                                outputStream.writeBoolean(false);
+                                outputStream.writeUTF("game");
                                 System.out.println("""
                                         Выберите:
                                         1 - Камень
@@ -50,11 +50,11 @@ public class ClientRunner {
                                         """);
                                 selectPlayer2 = scanner.nextInt();
                                 if (selectPlayer2 > 0 && selectPlayer2 < 4) {
-                                    boolean capitulate = inputStream.readBoolean();
-                                    if (capitulate) {
+                                    String capitulate = inputStream.readUTF();
+                                    if (capitulate.equals("capitulate")) {
                                         System.out.println("Противник сдался");
                                         cycleStop = true;
-                                        outputStream.writeBoolean(true);
+                                        outputStream.writeUTF("capitulate");
                                         socket.close();
                                     } else {
                                         i = inputOutputClient(inputStream, outputStream, selectPlayer2, i);
@@ -74,7 +74,7 @@ public class ClientRunner {
 //                                }
 //                            }
                             case 3 -> {
-                                outputStream.writeBoolean(true);
+                                outputStream.writeUTF("capitulate");
                                 System.out.println("Вы сдались");
                                 cycleStop = true;
                             }
@@ -87,8 +87,8 @@ public class ClientRunner {
                 }
                 case 3 -> {
                     for (int i = 0; i < 5; i++) {
-                        outputStream.writeBoolean(false);
-                        inputStream.readBoolean();
+                        outputStream.writeUTF("game");
+                        inputStream.readUTF();
                         selectPlayer2 = new Random().nextInt(3) + 1;
                         i = inputOutputClient(inputStream, outputStream, selectPlayer2, i);
                     }

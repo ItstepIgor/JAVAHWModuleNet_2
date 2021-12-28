@@ -37,7 +37,7 @@ public class ServerRunner {
                         int selectAction = scanner.nextInt();
                         switch (selectAction) {
                             case 1 -> {
-                                outputStream.writeBoolean(false);
+                                outputStream.writeUTF("game");
                                 System.out.println("""
                                         Выберите:
                                         1 - Камень
@@ -46,8 +46,8 @@ public class ServerRunner {
                                         """);
                                 int selectPlayer1 = scanner.nextInt();
                                 if (selectPlayer1 > 0 && selectPlayer1 < 4) {
-                                    boolean capitulate = inputStream.readBoolean();
-                                    if (capitulate) {
+                                    String capitulate = inputStream.readUTF();
+                                    if (capitulate.equals("capitulate")) {
                                         System.out.println("Противник сдался");
                                         cycleStop = true;
                                         socket.close();
@@ -70,10 +70,10 @@ public class ServerRunner {
 //                                }
 //                            }
                             case 3 -> {
-                                outputStream.writeBoolean(true);
+                                outputStream.writeUTF("capitulate");
 //                                cycleStop = true;
                                 System.out.println("Вы сдались");
-                                inputStream.readBoolean();
+                                inputStream.readUTF();
                                 cycleStop = true;
                             }
                         }
@@ -84,10 +84,10 @@ public class ServerRunner {
                 }
                 case 2, 3 -> {
                     for (int i = 0; i < 5; i++) {
-                        boolean capitulate = inputStream.readBoolean();
-                        outputStream.writeBoolean(false);
+                        String capitulate = inputStream.readUTF();
+                        outputStream.writeUTF("game");
                         int selectPlayer1 = new Random().nextInt(3) + 1;
-                        if (capitulate) {
+                        if (capitulate.equals("capitulate")) {
                             System.out.println("Противник сдался");
                             cycleStop = true;
                             socket.close();
