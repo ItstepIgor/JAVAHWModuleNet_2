@@ -81,7 +81,6 @@ public class GameService {
         resultGamePlayer1.add("Игра №" + (j + 1) + " " + message);
 
         System.out.println(message);
-
     }
 
     @SneakyThrows
