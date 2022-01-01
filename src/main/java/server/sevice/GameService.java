@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @ToString
 public class GameService {
     private final List<RoundGame> roundGameList = new ArrayList<>();
-    private List<String> resultGamePlayer1 = new ArrayList<>();
+    private final List<String> resultGamePlayer1 = new ArrayList<>();
 
     List<String> list = List.of("Камень", "Ножницы", "Бумага");
     private String messagePlayer1;
