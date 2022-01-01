@@ -14,7 +14,7 @@ public class ClientRunner {
     private static final int PORT = 8080;
     private static final String SERVERIP = "127.0.0.1";
 
-    private static List<String> resultGamePlayer2 = new ArrayList<>();
+    private static final List<String> resultGamePlayer2 = new ArrayList<>();
 
     @SneakyThrows
     public static void main(String[] args) {
