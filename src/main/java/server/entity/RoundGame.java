@@ -10,4 +10,5 @@ public class RoundGame {
     int selectionPlayer2;
     int pointsPlayer1;
     int pointsPlayer2;
+    int numberGame;
 }
